@@ -1,10 +1,16 @@
 var fs = require('fs');
+var system = require('system');
 var confess = {
 
     run: function () {
         var cliConfig = {};
         if (!this.processArgs(cliConfig, [
-            {
+	    {
+		name: 'phantomjs',
+		def: 'phantomjs',
+		req: 'true',
+		desc: 'the phantomjs'
+	    }, {
                 name: 'url',
                 def: 'http://google.com',
                 req: true,
@@ -413,9 +419,10 @@ var confess = {
     processArgs: function (config, contract) {
         var a = 0;
         var ok = true;
+
         contract.forEach(function(argument) {
-            if (a < phantom.args.length) {
-                config[argument.name] = phantom.args[a];
+            if (a < system.args.length) {
+                config[argument.name] = system.args[a];
             } else {
                 if (argument.req) {
                     console.log('"' + argument.name + '" argument is required. This ' + argument.desc + '.');
